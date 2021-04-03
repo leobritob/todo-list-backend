@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import * as jsonwebtoken from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
+import { LoginDto } from './auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async login(data) {
+  async login(data: LoginDto) {
     const user = await this.usersService.findByEmailOrFail(data.email);
 
     const isValid = await bcrypt.compare(data.password, user.password);
