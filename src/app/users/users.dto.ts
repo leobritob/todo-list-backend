@@ -18,4 +18,16 @@ export class StoreUserDto {
   password: string;
 }
 
-export class UpdateUsersDto extends StoreUserDto {}
+export class UpdateUsersDto {
+  @IsNotEmpty()
+  @MaxLength(255)
+  firstName: string;
+
+  @IsNotEmpty()
+  lastName: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  @MaxLength(255)
+  email: string;
+}

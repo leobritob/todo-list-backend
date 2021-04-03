@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -7,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { ProjectsEntity } from '../projects/projects.entity';
 
 @Entity({ name: 'users' })
@@ -37,4 +40,10 @@ export class UsersEntity {
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async encryptPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }
