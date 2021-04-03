@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './app/users/users.module';
 import { ProjectsModule } from './app/projects/projects.module';
+import { TasksModule } from './app/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProjectsModule } from './app/projects/projects.module';
     }),
     UsersModule,
     ProjectsModule,
+    TasksModule,
   ],
   controllers: [],
   providers: [],

@@ -3,31 +3,34 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ProjectsEntity } from '../projects/projects.entity';
 
-@Entity({ name: 'users' })
-export class UsersEntity {
+@Entity({ name: 'tasks' })
+export class TasksEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'first_name' })
-  firstName: string;
-
-  @Column({ name: 'last_name' })
-  lastName: string;
-
   @Column()
-  email: string;
+  description: string;
 
-  @Column()
-  password: string;
+  @Column({ name: 'due_date', type: 'timestamp' })
+  dueDate: string;
 
-  @OneToMany(() => ProjectsEntity, (project) => project.user)
-  projects: ProjectsEntity[];
+  @Column({ type: 'tinyint', width: 1, default: 0 })
+  done: number;
+
+  @ManyToOne(() => ProjectsEntity, (project) => project.tasks, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'project_id' })
+  project: ProjectsEntity;
 
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: string;
