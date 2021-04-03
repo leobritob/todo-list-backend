@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { StoreProjectsDto, UpdateProjectsDto } from './projects.dto';
 import { ProjectsEntity } from './projects.entity';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class ProjectsService {
     return await this.projectsRepository.find();
   }
 
-  async store(data) {
+  async store(data: StoreProjectsDto) {
     return await this.projectsRepository.save(
       this.projectsRepository.create(data),
     );
@@ -24,7 +25,7 @@ export class ProjectsService {
     return await this.findByIdOrFail(id);
   }
 
-  async update(id: string, data) {
+  async update(id: string, data: UpdateProjectsDto) {
     const user = await this.projectsRepository.findOneOrFail(id);
 
     this.projectsRepository.merge(user, data);

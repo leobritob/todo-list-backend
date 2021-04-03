@@ -28,6 +28,9 @@ export class ProjectsEntity {
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
+  @Column({ name: 'user_id', type: 'uuid', nullable: false })
+  userId: string;
+
   @OneToMany(() => TasksEntity, (task) => task.project)
   tasks: TasksEntity[];
 
