@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsUUID, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUUID, MaxLength } from 'class-validator';
 
 export class StoreProjectsDto {
   @IsNotEmpty()
@@ -10,6 +10,7 @@ export class StoreProjectsDto {
 }
 
 export class UpdateProjectsDto {
+  @IsOptional()
   @IsNotEmpty()
   @MaxLength(255)
   name: string;

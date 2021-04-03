@@ -5,8 +5,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { StoreUserDto, UpdateUsersDto } from './users.dto';
 import { UsersService } from './users.service';
@@ -30,7 +30,7 @@ export class UsersController {
     return await this.usersService.show(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() body: UpdateUsersDto,

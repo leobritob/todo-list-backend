@@ -5,8 +5,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { StoreProjectsDto, UpdateProjectsDto } from './projects.dto';
 import { ProjectsService } from './projects.service';
@@ -30,7 +30,7 @@ export class ProjectsController {
     return await this.projectsService.show(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() body: UpdateProjectsDto,

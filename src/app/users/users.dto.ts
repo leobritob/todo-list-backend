@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
 export class StoreUserDto {
   @IsNotEmpty()
@@ -19,13 +19,16 @@ export class StoreUserDto {
 }
 
 export class UpdateUsersDto {
+  @IsOptional()
   @IsNotEmpty()
   @MaxLength(255)
   firstName: string;
 
+  @IsOptional()
   @IsNotEmpty()
   lastName: string;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsEmail()
   @MaxLength(255)
