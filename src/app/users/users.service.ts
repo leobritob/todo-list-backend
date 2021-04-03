@@ -36,6 +36,14 @@ export class UsersService {
     await this.usersRepository.softDelete({ id });
   }
 
+  async findByEmailOrFail(email: string) {
+    try {
+      return await this.usersRepository.findOneOrFail({ email });
+    } catch (e) {
+      throw new NotFoundException(e.message);
+    }
+  }
+
   private async findByIdOrFail(id: string) {
     try {
       return await this.usersRepository.findOneOrFail(id);

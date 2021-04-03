@@ -1,0 +1,28 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
+import * as jsonwebtoken from 'jsonwebtoken';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService,
+  ) {}
+
+  async login(data) {
+    const user = await this.usersService.findByEmailOrFail(data.email);
+
+    const isValid = await bcrypt.compare(data.password, user.password);
+
+    if (!isValid) throw new UnauthorizedException();
+
+    const token = jsonwebtoken.sign(
+      { user },
+      this.configService.get('SECRET_KEY'),
+    );
+
+    return { token };
+  }
+}
