@@ -8,7 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { StoreUserDto, UpdateUsersDto } from './users.dto';
+import { StoreUsersDto, UpdateUsersDto } from './users.dto';
 import { UsersService } from './users.service';
 
 @Controller('api/v1/users')
@@ -21,7 +21,7 @@ export class UsersController {
   }
 
   @Post()
-  async store(@Body() body: StoreUserDto) {
+  async store(@Body() body: StoreUsersDto) {
     return await this.usersService.store(body);
   }
 

@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
-export class StoreUserDto {
+export class StoreUsersDto {
   @IsNotEmpty()
   @MaxLength(255)
   firstName: string;

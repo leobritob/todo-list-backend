@@ -32,6 +32,9 @@ export class TasksEntity {
   @JoinColumn({ name: 'project_id' })
   project: ProjectsEntity;
 
+  @Column({ name: 'project_id', type: 'uuid', nullable: false })
+  projectId: string;
+
   @CreateDateColumn({ name: 'created_at', nullable: false })
   createdAt: string;
 

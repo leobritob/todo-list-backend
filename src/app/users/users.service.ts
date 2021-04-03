@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StoreUserDto, UpdateUsersDto } from './users.dto';
+import { StoreUsersDto, UpdateUsersDto } from './users.dto';
 import { UsersEntity } from './users.entity';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class UsersService {
     return await this.usersRepository.find();
   }
 
-  async store(data: StoreUserDto) {
+  async store(data: StoreUsersDto) {
     return await this.usersRepository.save(this.usersRepository.create(data));
   }
 

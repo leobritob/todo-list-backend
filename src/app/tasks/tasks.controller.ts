@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { StoreTasksDto, UpdateTasksDto } from './tasks.dto';
 import { TasksService } from './tasks.service';
 
 @Controller('api/v1/tasks')
@@ -20,7 +21,7 @@ export class TasksController {
   }
 
   @Post()
-  async store(@Body() body) {
+  async store(@Body() body: StoreTasksDto) {
     return await this.tasksService.store(body);
   }
 
@@ -30,7 +31,10 @@ export class TasksController {
   }
 
   @Patch(':id')
-  async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body) {
+  async update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() body: UpdateTasksDto,
+  ) {
     return await this.tasksService.update(id, body);
   }
 
