@@ -29,7 +29,7 @@ export class TasksEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'project_id' })
+  @JoinColumn({ name: 'project_id', referencedColumnName: 'id' })
   project: ProjectsEntity;
 
   @Column({ name: 'project_id', type: 'uuid', nullable: false })

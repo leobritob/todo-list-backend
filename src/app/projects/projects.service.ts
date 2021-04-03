@@ -12,7 +12,17 @@ export class ProjectsService {
   ) {}
 
   async index() {
-    return await this.projectsRepository.find();
+    return await this.projectsRepository
+      .createQueryBuilder('projects')
+      .select(['projects.id', 'projects.name'])
+      .addSelect([
+        'tasks.id',
+        'tasks.description',
+        'tasks.done',
+        'tasks.dueDate',
+      ])
+      .leftJoin('projects.tasks', 'tasks')
+      .getMany();
   }
 
   async store(data: StoreProjectsDto) {

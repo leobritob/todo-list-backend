@@ -25,7 +25,7 @@ export class ProjectsEntity {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: UsersEntity;
 
   @Column({ name: 'user_id', type: 'uuid', nullable: false })
