@@ -7,25 +7,29 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
+import { IAuthRequest } from '../auth/auth.interface';
 import { StoreProjectsDto, UpdateProjectsDto } from './projects.dto';
 import { ProjectsService } from './projects.service';
 
 @Controller('api/v1/projects')
+@ApiTags('projects')
 @UseGuards(AuthGuard)
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async index() {
-    return await this.projectsService.index();
+  async index(@Req() req: IAuthRequest) {
+    return await this.projectsService.index(req.user);
   }
 
   @Post()
-  async store(@Body() body: StoreProjectsDto) {
-    return await this.projectsService.store(body);
+  async store(@Body() body: StoreProjectsDto, @Req() req: IAuthRequest) {
+    return await this.projectsService.store(body, req.user);
   }
 
   @Get(':id')

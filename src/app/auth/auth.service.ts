@@ -24,6 +24,6 @@ export class AuthService {
       this.configService.get('SECRET_KEY'),
     );
 
-    return { token };
+    return { token, user };
   }
 }

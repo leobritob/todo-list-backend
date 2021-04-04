@@ -24,10 +24,12 @@ export class TasksService {
   }
 
   async update(id: string, data: UpdateTasksDto) {
-    const user = await this.tasksRepository.findOneOrFail(id);
+    const task = await this.tasksRepository.findOneOrFail(id);
 
-    this.tasksRepository.merge(user, data);
-    return await this.tasksRepository.save(user);
+    task.doneDate = data.done === 1 ? new Date().toISOString() : null;
+    this.tasksRepository.merge(task, data);
+
+    return await this.tasksRepository.save(task);
   }
 
   async destroy(id: string) {

@@ -18,8 +18,8 @@ export class TasksEntity {
   @Column()
   description: string;
 
-  @Column({ name: 'due_date', type: 'timestamp' })
-  dueDate: string;
+  @Column({ name: 'done_date', type: 'timestamp', default: null })
+  doneDate: string;
 
   @Column({ type: 'tinyint', width: 1, default: 0 })
   done: number;

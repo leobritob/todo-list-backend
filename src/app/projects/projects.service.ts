@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { IUser } from '../users/users.interface';
 import { StoreProjectsDto, UpdateProjectsDto } from './projects.dto';
 import { ProjectsEntity } from './projects.entity';
 
@@ -11,7 +12,7 @@ export class ProjectsService {
     private readonly projectsRepository: Repository<ProjectsEntity>,
   ) {}
 
-  async index() {
+  async index(user: IUser) {
     return await this.projectsRepository
       .createQueryBuilder('projects')
       .select(['projects.id', 'projects.name'])
@@ -19,16 +20,20 @@ export class ProjectsService {
         'tasks.id',
         'tasks.description',
         'tasks.done',
-        'tasks.dueDate',
+        'tasks.doneDate',
       ])
       .leftJoin('projects.tasks', 'tasks')
+      .where('projects.userId = :userId', { userId: user.id })
+      .orderBy('projects.createdAt', 'DESC')
+      .addOrderBy('tasks.createdAt', 'ASC')
       .getMany();
   }
 
-  async store(data: StoreProjectsDto) {
-    return await this.projectsRepository.save(
-      this.projectsRepository.create(data),
-    );
+  async store(data: StoreProjectsDto, user: IUser) {
+    const project = this.projectsRepository.create(data);
+    project.userId = user.id;
+
+    return await this.projectsRepository.save(project);
   }
 
   async show(id: string) {
