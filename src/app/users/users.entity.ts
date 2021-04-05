@@ -46,4 +46,8 @@ export class UsersEntity {
   async encryptPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+
+  constructor(data: Partial<UsersEntity>) {
+    Object.assign(this, data);
+  }
 }

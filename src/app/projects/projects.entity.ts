@@ -42,4 +42,8 @@ export class ProjectsEntity {
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt: string;
+
+  constructor(data: Partial<ProjectsEntity>) {
+    Object.assign(this, data);
+  }
 }
