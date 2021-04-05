@@ -43,4 +43,8 @@ export class TasksEntity {
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt: string;
+
+  constructor(data: Partial<TasksEntity>) {
+    Object.assign(this, data);
+  }
 }
