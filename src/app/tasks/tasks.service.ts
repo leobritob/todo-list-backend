@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StoreTasksDto, UpdateTasksDto } from './tasks.dto';
@@ -26,6 +30,8 @@ export class TasksService {
   async update(id: string, data: UpdateTasksDto) {
     const task = await this.tasksRepository.findOneOrFail(id);
 
+    if (task.done) throw new ForbiddenException();
+
     task.doneDate = data.done === 1 ? new Date().toISOString() : null;
     this.tasksRepository.merge(task, data);
 
@@ -33,7 +39,9 @@ export class TasksService {
   }
 
   async destroy(id: string) {
-    await this.findByIdOrFail(id);
+    const task = await this.findByIdOrFail(id);
+
+    if (task.done) throw new ForbiddenException();
 
     await this.tasksRepository.softDelete({ id });
   }
