@@ -10,7 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/auth.guard';
 import { IAuthRequest } from '../auth/auth.interface';
 import { StoreProjectsDto, UpdateProjectsDto } from './projects.dto';
@@ -18,6 +18,7 @@ import { ProjectsService } from './projects.service';
 
 @Controller('api/v1/projects')
 @ApiTags('projects')
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
